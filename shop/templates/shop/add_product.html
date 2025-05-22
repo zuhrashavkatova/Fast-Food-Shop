@@ -1,0 +1,22 @@
+
+<h2 style="color: yellow; background-color: rgba(1, 1, 3, 0.856); padding: 10px; border-radius: 8px; text-align: center;">Add Product</h2>
+
+<form method="post" enctype="multipart/form-data" style="background-color: black; padding: 20px; border-radius: 10px; width: 300px; margin: auto;">
+    {% csrf_token %}
+    
+    <label style="color: yellow;">Name:</label><br>
+    <input type="text" name="name" style="width: 100%; padding: 8px; margin-bottom: 10px;"><br>
+    
+    <label style="color: yellow;">Price:</label><br>
+    <input type="number" step="0.01" name="price" style="width: 100%; padding: 8px; margin-bottom: 10px;"><br>
+    
+    <label style="color: yellow;">Quantity:</label><br>
+    <input type="number" name="quantity" style="width: 100%; padding: 8px; margin-bottom: 10px;"><br>
+    
+    <label style="color: yellow;">Image:</label><br>
+    <input type="file" name="image" style="margin-bottom: 15px; color: yellow;"><br>
+    
+    <button type="submit" style="background-color: yellow; color: black; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
+        Add
+    </button>
+</form>

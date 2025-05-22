@@ -1,0 +1,189 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Panel - Manage Products</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            /* background-color: #f0f8ff; */
+            margin: 0;
+            padding: 20px;
+            background-image: url("{% static 'images/back_new.jpeg' %}");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            background-color: #27ae60;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #219150;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 30px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #2c3e50;
+            color: white;
+        }
+
+        .btn-edit {
+            background-color: #f39c12;
+        }
+
+        .btn-delete {
+            background-color: #e74c3c;
+        }
+
+        .btn-edit:hover {
+            background-color: #d78c0d;
+        }
+
+        .btn-delete:hover {
+            background-color: #c0392b;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="background-color: antiquewhite;">🛠️ Admin Panel - Product Management</h1>
+    <div class="container">
+
+        <!-- Add New Product -->
+        <h2>Admin Panel</h2>
+<a href="{% url 'add_product' %}">➕ Add Product</a>
+
+<table border="1">
+    <tr>
+        <th>Image</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Actions</th>
+    </tr>
+    {% for product in products %}
+    <tr>
+        <td><img src="{{ product.image.url }}" width="80"></td>
+        <td>{{ product.name }}</td>
+        <td>{{ product.price }}</td>
+        <td>{{ product.quantity }}</td>
+        <td>
+            <a href="{% url 'edit_product' product.id %}">✏️ Edit</a>
+            <a href="{% url 'delete_product' product.id %}">❌ Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+
+        <hr>
+
+        <h3>All Products:</h3>
+        <ul>
+            {% for p in products %}
+                <li>
+                    {{ p.name }} - ${{ p.price }} ({{ p.quantity }})<br>
+                    <form method="POST" action="{% url 'delete_product' p.id %}" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit">Delete</button>
+                    </form>
+                    <a href="{% url 'edit_product' p.id %}">Edit</a>
+                </li>
+            {% endfor %}
+        </ul>
+
+        
+        <!-- <h2 style="margin-top:40px;">🧾 Existing Products</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th>Price ($)</th>
+                    <th>Quantity</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td><img src="{{ product.image }}" width="50" style="border-radius:5px;"></td>
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.price }}</td>
+                    <td>{{ product.quantity }}</td>
+                    <td>
+                        <form action="/admin/edit_product/{{ product.id }}/" method="POST" style="display:inline-block;">
+                            {% csrf_token %}
+                            <button class="btn-edit">✏️ Edit</button>
+                        </form>
+                        <form action="/admin/delete_product/{{ product.id }}/" method="POST" style="display:inline-block;">
+                            {% csrf_token %}
+                            <button class="btn-delete">🗑️ Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table> -->
+    </div>
+</body>
+</html>
